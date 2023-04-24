@@ -24,11 +24,38 @@ async function run() {
     const database = client.db("reminder_app");
     const remindersCollection = database.collection("reminders");
 
+    // GET - all reminders
     app.get("/all-reminders", async (req, res) => {
       const cursor = remindersCollection.find({});
       const reminders = await cursor.toArray();
-
       res.json(reminders);
+    });
+
+    // PUT - update task status
+    app.put("/update-reminder-status", async (req, res) => {
+      const updatedTask = req.body;
+
+      const email = req.query?.email;
+      const id = req.query?.id;
+
+      const status = updatedTask?.status === "done" ? "pending" : "done";
+
+      const result = await remindersCollection.updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            status: status,
+          },
+        }
+      );
+      res.json(result);
+    });
+
+    // POST - Add a task to task list
+    app.post("/add-task", async (req, res) => {
+      const task = req.body;
+      const result = await remindersCollection.insertOne(task);
+      res.json(result);
     });
   } finally {
     // await client.close();
@@ -37,7 +64,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Simple ExpressJS server is running...");
+  res.send("Reminder App server is running...");
 });
 
 app.listen(port, () => {
