@@ -25,8 +25,9 @@ async function run() {
     const remindersCollection = database.collection("reminders");
 
     // GET - all reminders
-    app.get("/all-reminders", async (req, res) => {
-      const cursor = remindersCollection.find({});
+    app.get("/all-reminders/:email", async (req, res) => {
+      const email = req.params.email;
+      const cursor = remindersCollection.find({ email: email });
       const reminders = await cursor.toArray();
       res.json(reminders);
     });
@@ -55,6 +56,14 @@ async function run() {
     app.post("/add-task", async (req, res) => {
       const task = req.body;
       const result = await remindersCollection.insertOne(task);
+      res.json(result);
+    });
+
+    // Delete - Delete a task
+    app.delete("/task-list/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await remindersCollection.deleteOne(query);
       res.json(result);
     });
   } finally {
