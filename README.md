@@ -4,10 +4,6 @@ This is a simple ExpressJS server of [Reminder App](https://reminder-app-ih.verc
 
 This server is hosted on Reder. Link: [https://reminder-app-server.onrender.com/](https://reminder-app-server.onrender.com/)
 
-# Welcome to [Reminder App](https://reminder-app-ih.vercel.app/)
-
-This is a simple [Reminder App](https://reminder-app-ih.vercel.app/) built using NextJS. Visit the live link here - [https://reminder-app-ih.vercel.app/](https://reminder-app-ih.vercel.app/)
-
 ## About the Reminder App
 
 - The Reminder App is a user-friendly web application developed using NextJS and Tailwind CSS.
